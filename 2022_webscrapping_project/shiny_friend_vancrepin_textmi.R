@@ -21,6 +21,10 @@ library(topicmodels)
 
 friend <- read_csv(file = "friends.csv")
 
+friend_lead <- friend %>% filter(character%in% c("rachel", "monica", "chandler", "phoebe", "ross", "joey","chan","phoe","mnca","rach")) 
+
+count_lead <- friend_lead %>% group_by(character) %>% count(character, name = "lead_character_n", sort = TRUE)
+
 friend_guess <- friend %>% filter(!character%in% c("rachel", "monica", "chandler", "phoebe", "ross", "joey", "all","chan","phoe","mnca","rach")) 
 
 count_guess <- friend_guess %>% group_by(character) %>% count(character, name = "guess_character_n", sort = TRUE)
@@ -74,17 +78,18 @@ top_terms <- topics %>%group_by(topic) %>%
   ungroup() %>%
   arrange(topic, -beta)
 
-# Define UI for application that draws a histogram
+# Define UI for application 
 ui <- fluidPage(
 
     # Application title
     titlePanel("Text Mining Friends Series DASHBOARD"),
 
-    # Sidebar with a slider input for number of bins 
     fluidRow(
             column (12,navbarPage("Text analysis :",
+                                  tabPanel( "Lead character wordcloud", 
+                                            wordcloud2Output("wordcloud1")),
                                tabPanel( "Guess character wordcloud", 
-                                         wordcloud2Output("wordcloud")),
+                                         wordcloud2Output("wordcloud2")),
                                tabPanel( "Words association",
                                          plotOutput("network")),
                                tabPanel( "Sentiment analysis",
@@ -96,12 +101,17 @@ ui <- fluidPage(
 
         
 
-# Define server logic required to draw a histogram
+# Define server logic 
 server <- function(input, output) {
   
+  output$wordcloud1 <- renderWordcloud2({wordcloud2(data = count_lead, 
+                                                   shape = "Pentagon",
+                                                   color = friend.colors,
+                                                   backgroundColor = friend.background
+ )} )
+  
 
-
-  output$wordcloud <- renderWordcloud2({wordcloud2(data = count_guess, 
+  output$wordcloud2 <- renderWordcloud2({wordcloud2(data = count_guess, 
                shape = "Pentagon",
                color = friend.colors,
                backgroundColor = friend.background
@@ -127,7 +137,9 @@ server <- function(input, output) {
       facet_wrap(~sentiment, scales = "free_y") +
       labs(y = "Words used related to negative/positive sentiment", x = NULL) +  
       ggtitle("lead character - Sentiment analysis")+
-      theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold"))},
+      theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold"))+
+      theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+      panel.background = element_blank())},
     width = "auto",
     height = "auto",
     res = 72)
@@ -141,7 +153,9 @@ server <- function(input, output) {
       coord_flip() +
       scale_x_reordered()+
       labs(title = "Word-Topic Probabilities")+
-      theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold"))},
+      theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold"))+ 
+      theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+      panel.background = element_blank())},
     width = "auto",
     height = "auto",
     res = 72)

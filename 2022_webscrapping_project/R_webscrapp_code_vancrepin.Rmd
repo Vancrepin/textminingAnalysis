@@ -1,0 +1,562 @@
+---
+title: "Assigment_project_webscrappingdatamining"
+author: "Nyamdi Mienjiem Van Crepin"
+date: "4/9/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+
+
+```{r, echo=TRUE}
+#  libraries
+library(rvest)
+library(tidyverse)
+library(dplyr)
+library(stringr)
+library(xml2)
+library(XML)
+
+library(tidytext)
+```
+
+# for the webscrapping
+ We have to recourse to localhost in order to convert Html file link store into an external webserver into an url link store locally 
+ in order to Selectorgadget extension on chrome to easily collect css item expression.
+
+```{r web_scrapping_Xpath , ECHO=TRUE}
+friend <- data.frame(season=numeric(),
+                 episode=numeric(), 
+                 title=character(),
+                 character=character(),
+                 stringsAsFactors=FALSE)
+
+link1 <-c("http://localhost/PG/0101.html",
+"http://localhost/PG/0102.html",
+"http://localhost/PG/0103.html",
+"http://localhost/PG/0104.html",
+ "http://localhost/PG/0105.html",
+ "http://localhost/PG/0106.html",
+ "http://localhost/PG/0107.html",
+ "http://localhost/PG/0108.html",
+ "http://localhost/PG/0109.html",
+"http://localhost/PG/0110.html",
+ "http://localhost/PG/0111.html",
+ "http://localhost/PG/0112.html",
+ "http://localhost/PG/0113.html",
+ "http://localhost/PG/0114.html",
+ "http://localhost/PG/0115.html",
+"http://localhost/PG/0116.html",
+ "http://localhost/PG/0117.html",
+ "http://localhost/PG/0118.html",
+ "http://localhost/PG/0119.html",
+ "http://localhost/PG/0120.html",
+"http://localhost/PG/0121.html",
+ "http://localhost/PG/0122.html",
+"http://localhost/PG/0123.html",
+"http://localhost/PG/0124.html")
+
+j <- 1
+while(j<24){
+  x1 <- link1[j]
+  season <- 1
+  page <- read_html(x1)
+  episode <- j
+  title <- page %>% 
+    html_node("body h1") %>% 
+    html_text()
+  character <- page %>% html_nodes(xpath="//p[position()>1][not(name()='strong')]") %>% html_text()
+  friend <- rbind(friend,data.frame(season, episode, title, character))
+  j <- j+1
+}
+
+###season2####
+
+link2 <-c("http://localhost/PG/0201.html",
+ "http://localhost/PG/0202.html",
+"http://localhost/PG/0203.html",
+"http://localhost/PG/0204.html",
+ "http://localhost/PG/0205.html",
+ "http://localhost/PG/0206.html",
+ "http://localhost/PG/0207.html",
+ "http://localhost/PG/0208.html",
+ "http://localhost/PG/0209.html",
+"http://localhost/PG/0210.html",
+ "http://localhost/PG/0211.html",
+ "http://localhost/PG/0212-0213.html",
+"http://localhost/PG/0214.html",
+ "http://localhost/PG/0215.html",
+ "http://localhost/PG/0216.html",
+ "http://localhost/PG/0217.html",
+ "http://localhost/PG/0218.html",
+ "http://localhost/PG/0219.html",
+ "http://localhost/PG/0220.html",
+"http://localhost/PG/0221.html",
+ "http://localhost/PG/0222.html",
+"http://localhost/PG/0223.html")
+
+j <- 1
+while(j<22){
+  x2 <- link2[j]
+page <- read_html(x2)
+season <- 2
+episode <- j
+ title <- page %>% 
+   html_node("body h1") %>% 
+   html_text()
+character <- page %>% 
+  html_nodes("p~ p") %>% 
+  html_text()
+friend <- rbind(friend,data.frame(season, episode, title, character))
+  j <- j+1
+}
+
+#################season3
+
+link3 <-c(  "http://localhost/PG/0301.html",
+            "http://localhost/PG/0302.html",
+  "http://localhost/PG/0303.html",
+ "http://localhost/PG/0304.html",
+"http://localhost/PG/0305.html",
+"http://localhost/PG/0306.html",
+"http://localhost/PG/0307.html",
+ "http://localhost/PG/0308.html",
+ "http://localhost/PG/0309.html",
+ "http://localhost/PG/0310.html",
+ "http://localhost/PG/0311.html",
+ "http://localhost/PG/0312.html",
+"http://localhost/PG/0313.html",
+ "http://localhost/PG/0314.html",
+ "http://localhost/PG/0315.html",
+ "http://localhost/PG/0316.html",
+ "http://localhost/PG/0317.html",
+ "http://localhost/PG/0318.html",
+ "http://localhost/PG/0319.html",
+ "http://localhost/PG/0320.html",
+ "http://localhost/PG/0321.html",
+ "http://localhost/PG/0322.html",
+"http://localhost/PG/0323.html",
+ "http://localhost/PG/0324.html")
+
+j <- 1
+while(j<24){
+  x3 <- link3[j]
+  season <- 3
+  page <- read_html(x3)
+  episode <- j
+  title <- page %>% 
+    html_node("body h1") %>% 
+    html_text()
+  character <- page %>% html_nodes(xpath="//p[position()>1][not(name()='strong')]") %>% html_text()
+  friend <- rbind(friend,data.frame(season, episode, title, character))
+  j <- j+1
+}
+##############season4
+
+link4 <-c(  "http://localhost/PG/0401.html", "http://localhost/PG/0402.html",
+  "http://localhost/PG/0403.html", "http://localhost/PG/0404.html", "http://localhost/PG/0405.html", "http://localhost/PG/0406.html", "http://localhost/PG/0407.html", "http://localhost/PG/0408.html", "http://localhost/PG/0409.html", "http://localhost/PG/0410.html", "http://localhost/PG/0411.html", "http://localhost/PG/0412.html", "http://localhost/PG/0413.html", "http://localhost/PG/0414.html", "http://localhost/PG/0415.html", "http://localhost/PG/0416.html", "http://localhost/PG/0417.html", "http://localhost/PG/0418.html", "http://localhost/PG/0419.html", "http://localhost/PG/0420.html", "http://localhost/PG/0421.html", "http://localhost/PG/0422.html", "http://localhost/PG/0423.html",
+ "http://localhost/PG/0324.html")
+
+j <- 1
+while(j<24){
+  x4 <- link4[j]
+  season <- 4
+  page <- read_html(x3)
+  episode <- j
+  title <- page %>% 
+    html_node("body h1") %>% 
+    html_text()
+  character <- page %>% html_nodes(xpath="//p[position()>1][not(name()='strong')]") %>% html_text()
+  friend <- rbind(friend,data.frame(season, episode, title, character))
+  j <- j+1
+}
+
+############ season5
+
+link5 <-c(  "http://localhost/PG/0501.html", "http://localhost/PG/0502.html", "http://localhost/PG/0503.html", "http://localhost/PG/0504.html", "http://localhost/PG/0505.html", "http://localhost/PG/0506.html", "http://localhost/PG/0507.html", "http://localhost/PG/0508.html", "http://localhost/PG/0509.html", "http://localhost/PG/0510.html",
+  "http://localhost/PG/0511.html", "http://localhost/PG/0512.html", "http://localhost/PG/0513.html", "http://localhost/PG/0514.html", "http://localhost/PG/0515.html", "http://localhost/PG/0516.html", "http://localhost/PG/0517.html", "http://localhost/PG/0518.html",
+  "http://localhost/PG/0519.html", "http://localhost/PG/0520.html", "http://localhost/PG/0521.html", "http://localhost/PG/0522.html", "http://localhost/PG/0523.html")
+
+j <- 1
+while(j<23){
+  x5 <- link5[j]
+  season <- 5
+  page <- read_html(x3)
+  episode <- j
+  title <- page %>% 
+    html_node("body h1") %>% 
+    html_text()
+  character <- page %>% html_nodes(xpath="//p[position()>1][not(name()='strong')]") %>% html_text()
+  friend <- rbind(friend,data.frame(season, episode, title, character))
+  j <- j+1
+}
+#########" season6
+
+link6 <-c( "http://localhost/PG/0601.html", "http://localhost/PG/0602.html" , "http://localhost/PG/0603.html", "http://localhost/PG/0604.html", "http://localhost/PG/0605.html", "http://localhost/PG/0606.html", "http://localhost/PG/0607.html", "http://localhost/PG/0608.html", "http://localhost/PG/0609.html", "http://localhost/PG/0610.html", "http://localhost/PG/0611.html", "http://localhost/PG/0612.html", "http://localhost/PG/0613.html", "http://localhost/PG/0614.html", "http://localhost/PG/0615-0616.html", "http://localhost/PG/0617.html", "http://localhost/PG/0618.html", "http://localhost/PG/0619.html", "http://localhost/PG/0620.html", "http://localhost/PG/0621.html", "http://localhost/PG/0622.html", "http://localhost/PG/0623.html", "http://localhost/PG/0624.html")
+
+j <- 1
+while(j<23){
+  x6 <- link6[j]
+  season <- 6
+  page <- read_html(x3)
+  episode <- j
+  title <- page %>% 
+    html_node("body h1") %>% 
+    html_text()
+  character <- page %>% html_nodes(xpath="//p[position()>1][not(name()='strong')]") %>% html_text()
+  friend <- rbind(friend,data.frame(season, episode, title, character))
+  j <- j+1
+}
+######## season7
+link7 <-c(  "http://localhost/PG/0701.html", "http://localhost/PG/0702.html", "http://localhost/PG/0703.html" , "http://localhost/PG/0704.html", "http://localhost/PG/0705.html", "http://localhost/PG/0706.html", "http://localhost/PG/0707.html", "http://localhost/PG/0708.html", "http://localhost/PG/0709.html", "http://localhost/PG/0710.html", "http://localhost/PG/0711.html", "http://localhost/PG/0712.html", "http://localhost/PG/0713.html", "http://localhost/PG/0714.html",
+  "http://localhost/PG/0715.html", "http://localhost/PG/0716.html", "http://localhost/PG/0717.html", "http://localhost/PG/0718.html", "http://localhost/PG/0719.html", "http://localhost/PG/0720.html",
+  "http://localhost/PG/0721.html", "http://localhost/PG/0722.html",
+  "http://localhost/PG/0723.html")
+
+j <- 1
+while(j<23){
+  x7 <- link7[j]
+  season <- 7
+  page <- read_html(x3)
+  episode <- j
+  title <- page %>% 
+    html_node("body h1") %>% 
+    html_text()
+  character <- page %>% html_nodes(xpath="//p[position()>1][not(name()='strong')]") %>% html_text()
+  friend <- rbind(friend,data.frame(season, episode, title, character))
+  j <- j+1
+}
+######## season8
+link8 <-c(  "http://localhost/PG/0801.html", "http://localhost/PG/0802.html", "http://localhost/PG/0803.html", "http://localhost/PG/0804.html", "http://localhost/PG/0805.html", "http://localhost/PG/0806.html", "http://localhost/PG/0807.html", "http://localhost/PG/0808.html", "http://localhost/PG/0809.html", "http://localhost/PG/0810.html", "http://localhost/PG/0811.html", "http://localhost/PG/0812.html", "http://localhost/PG/0813.html", "http://localhost/PG/0814.html", "http://localhost/PG/0815.html", "http://localhost/PG/0816.html", "http://localhost/PG/0817.html", "http://localhost/PG/0818.html", "http://localhost/PG/0819.html", "http://localhost/PG/0820.html",
+    "http://localhost/PG/0821.html", "http://localhost/PG/0822.html",
+    "http://localhost/PG/0823.html")
+
+j <- 1
+while(j<23){
+  x8 <- link8[j]
+  season <- 8
+  page <- read_html(x3)
+  episode <- j
+  title <- page %>% 
+    html_node("body h1") %>% 
+    html_text()
+  character <- page %>% html_nodes(xpath="//p[position()>1][not(name()='strong')]") %>% html_text()
+  friend <- rbind(friend,data.frame(season, episode, title, character))
+  j <- j+1
+}
+####### season9
+link9 <-c( "http://localhost/PG/0901.html", "http://localhost/PG/0902.html", "http://localhost/PG/0903.html", "http://localhost/PG/0904.html", "http://localhost/PG/0905.html", "http://localhost/PG/0906.html", "http://localhost/PG/0907.html", "http://localhost/PG/0908.html", "http://localhost/PG/0909.html", "http://localhost/PG/0910.html", "http://localhost/PG/0911.html", "http://localhost/PG/0912.html", "http://localhost/PG/0913.html", "http://localhost/PG/0914.html", "http://localhost/PG/0915.html", "http://localhost/PG/0916.html", "http://localhost/PG/0917.html", "http://localhost/PG/0918.html",
+    "http://localhost/PG/0919.html", "http://localhost/PG/0920.html",
+  "http://localhost/PG/0921.html" , "http://localhost/PG/0922.html",
+  "http://localhost/PG/0923-0924.html")
+
+j <- 1
+while(j<23){
+  x9 <- link9[j]
+  season <- 9
+  page <- read_html(x3)
+  episode <- j
+  title <- page %>% 
+    html_node("body h1") %>% 
+    html_text()
+  character <- page %>% html_nodes(xpath="//p[position()>1][not(name()='strong')]") %>% html_text()
+  friend <- rbind(friend,data.frame(season, episode, title, character))
+  j <- j+1
+}
+####### season10
+link10 <-c(  "http://localhost/PG/1001.html", "http://localhost/PG/1002.html",
+    "http://localhost/PG/1003.html", "http://localhost/PG/1004.html", "http://localhost/PG/1005.html", "http://localhost/PG/1006.html", "http://localhost/PG/1007.html", "http://localhost/PG/1008.html", "http://localhost/PG/1009.html", "http://localhost/PG/1010.html", "http://localhost/PG/1011.html", "http://localhost/PG/1012.html", "http://localhost/PG/1013.html", "http://localhost/PG/1014.html", "http://localhost/PG/1015.html", "http://localhost/PG/1016.html",
+    "http://localhost/PG/1017-1018.html")
+
+j <- 1
+while(j<17){
+  x10 <- link10[j]
+  season <- 10
+  page <- read_html(x3)
+  episode <- j
+  title <- page %>% 
+    html_node("body h1") %>% 
+    html_text()
+  character <- page %>% html_nodes(xpath="//p[position()>1][not(name()='strong')]") %>% html_text()
+  friend <- rbind(friend,data.frame(season, episode, title, character))
+  j <- j+1
+}
+
+
+```
+
+
+
+
+
+
+
+
+
+
+```{r, echo=TRUE}
+########Data transformation
+library(qdap)
+library(tm)
+library(stringr)
+library(xlsx)
+friend[c("character", "script")] <- str_split_fixed(friend$character, ":", 2)
+friend<- friend[!friend$script == "",] 
+###################### removed unwanted character
+friend$script <- removeNumbers(friend$script)
+friend$character <- tolower(friend$character)
+friend <-  friend[!grepl("\\(", friend$character),]
+friend <-  friend[!grepl("\\[", friend$character),]
+friend <-  friend[!grepl("\\,", friend$character),]
+friend <-  friend[!grepl("\\/", friend$character),]
+friend <-  friend[!grepl("and", friend$character),]
+friend$script <- genX(friend$script, " (", ")")
+friend$script <- genX(friend$script, " [", "]")
+write.xlsx2(friend,file = "friends.xlsx")
+
+
+
+
+```
+
+```{r}
+unique(friend$character)
+```
+
+```{r}
+# Count lead character number of line
+library(wordcloud2)
+friend_lead <- friend %>% filter(character%in% c("rachel", "monica", "chandler", "phoebe", "ross", "joey","chan","phoe","mnca","rach")) 
+
+count_lead <- friend_lead %>% group_by(character) %>% count(character, name = "lead_character_n", sort = TRUE)
+
+friend.colors = c("#c28464","#ebded5", "#54545d" )
+friend.background = "#e7ceb8"
+
+wordcloud2(data = count_lead, 
+           shape = "Pentagon",
+            color = friend.colors,
+           backgroundColor = friend.background
+           ) 
+
+```
+
+
+```{r, echo=TRUE}
+# Count guess character lines
+library(wordcloud2)
+friend_guess <- friend %>% filter(!character%in% c("rachel", "monica", "chandler", "phoebe", "ross", "joey", "all","chan","phoe","mnca","rach")) 
+
+count_guess <- friend_guess %>% group_by(character) %>% count(character, name = "guess_character_n", sort = TRUE)
+
+friend.colors = c("#c28464","#ebded5", "#54545d" )
+friend.background = "#e7ceb8"
+
+wordcloud2(data = count_guess, 
+           shape = "Pentagon",
+            color = friend.colors,
+           backgroundColor = friend.background
+           ) 
+
+
+
+```
+
+
+```{r, echo=TRUE}
+# lead Character words analysis
+#create a data frame only with lead character information
+friend_lead <- friend %>% filter(character == c("rachel", "monica", "chandler", "phoebe", "ross", "joey"))
+#unnest and clean the words
+stop_words <- tidytext::stop_words
+unnested_com <- friend_lead %>% tidytext :: unnest_tokens(input = script,
+                                                         output = "word",
+  token = "words")
+
+clean_com <- unnested_com %>% anti_join(stop_words, by = "word")
+clean_com_filter <- clean_com %>% filter(!word %in% c("uhm", "it’s", "ll", "im", "don’t", "i’m", "that’s", "ve", "that’s","you’re",
+                      "woah", "didn", "what're", "alright", "she’s", "we’re", "dont", "c'mere", "wouldn",
+                      "isn","pbs", "can’t", "je", "youre", "doesn", "007", "haven", "whoah", "whaddya", 
+                      "somethin", "yah", "uch", "i’ll","there’s", "won’t", "didn’t", "you’ll", "allright",
+                      "yeah", "hey", "uh", "gonna", "umm","um", "y'know", "ah", "ohh", "wanna", "ya", "huh", "wow",
+                      "whoa", "ooh")) %>% 
+  mutate(word = str_remove_all(word, "'s"))
+
+##### count number words at least used 50 times by the lead characters
+com_count <- clean_com_filter  %>% count(word, sort = TRUE) %>% filter(n >= 50) 
+
+```
+
+
+
+
+
+```{r network analysis, echo=TRUE}
+library(igraph)
+library(ggraph)# library for the plot a network
+library(widyr) # library for the pairwise_cor function
+
+
+#correlation between words across lead_character in the whole series
+
+word_correlations <- clean_com_filter %>% semi_join(com_count, by ="word") %>% 
+  pairwise_cor(item = word, feature = character) %>% filter( correlation > 0.65 ) 
+
+#build a word networkplot
+
+graph_from_data_frame(d = word_correlations,
+                      vertices = com_count %>% semi_join(word_correlations, by = c("word" = "item1"))) %>% 
+  ggraph(layout = "fr")+
+  geom_edge_link(aes(alpha = correlation)) + # to highlight which words are highly correlated or used together
+  geom_node_point()+
+  geom_node_text(aes(color = n, label = name), repel = TRUE) + # to highlight which words are the most used in the network 
+  ggtitle(" words association across lead character") +
+  theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold"))
+
+```
+
+
+
+
+```{r, echo=TRUE}
+library(textdata)
+
+# sentimental analysis between lead character
+
+bing <- get_sentiments(lexicon = "bing")
+sentiment_bing <- unnested_com %>% inner_join(y = bing)
+count_bing <- sentiment_bing %>% count(sentiment, word, sort = TRUE) %>% 
+  group_by(sentiment) %>% slice_max(n, n = 10) %>% ungroup() %>% mutate(word = reorder(word, n))
+ 
+ count_bing %>% ggplot(mapping = aes(x = n, y = word, fill = sentiment))+
+   geom_col(show.legend = FALSE) + 
+   facet_wrap(~sentiment, scales = "free_y") +
+  labs(y = "Words used related to negative/positive sentiment", x = NULL) +  
+  ggtitle("lead character - Sentiment analysis")+
+   theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold"))+ 
+      theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+            panel.background = element_blank())
+
+```
+
+
+
+```{r, echo=TRUE}
+# topics Analysis
+dtm <- clean_com_filter %>% 
+  select(season, word) %>% 
+  group_by(season, word) %>% 
+  count() %>% 
+  cast_dtm(season, word, n)
+
+# set a seed so that the output of the model is predictable
+library(topicmodels)
+lda <- LDA(dtm, k = 5, control = list(seed = 1234))
+topics <- tidy(lda, matrix = "beta")
+
+top_terms <- topics %>%group_by(topic) %>%
+  top_n(10, beta) %>%
+  ungroup() %>%
+  arrange(topic, -beta)
+
+# plot the top_terms by topics
+
+top_terms %>%
+  mutate(term = reorder_within(term, beta, topic)) %>%
+  ggplot(aes(term, beta, fill = factor(topic))) +
+  geom_col(show.legend = TRUE) +
+  facet_wrap(~ topic, scales = "free") +
+  coord_flip() +
+  scale_x_reordered()+
+  labs(title = "Word-Topic Probabilities")+
+  theme(plot.title = element_text(hjust = 0.5, size = 20, face = "bold")) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+            panel.background = element_blank())
+```
+
+
+
+
+
+
+```{r, echo=TRUE}
+# Deep topics comparison
+
+topics <- top_terms %>%
+  mutate(topic = paste0("topic", topic)) %>%
+  spread(topic, beta) %>%
+  filter(topic2 > .001 | topic3 > .001) %>%
+  mutate(log_ratio = log10(topic3 / topic2)) %>%
+  group_by(direction = log_ratio > 0) %>%
+  top_n(5, abs(log_ratio)) %>%
+  ungroup() %>%
+  mutate(term = reorder(term, log_ratio)) %>%
+  ggplot(aes(term, log_ratio, fill = log_ratio > 0)) +
+  geom_col() +
+  theme(legend.position = "none") +
+  labs(y = "Log ratio of beta in topic 3 / topic 2") +
+  coord_flip()
+
+plot(topics)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
